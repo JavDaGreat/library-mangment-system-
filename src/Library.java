@@ -1,20 +1,26 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+
 public class Library {
 
-    private ArrayList<Book> books;
     public boolean quit = false;
+    private ArrayList<Book> books;
 
     public Library() {
-        books = new ArrayList<>();
-        books.add(new Book("to kill a mockingbird","harper lee","9780060935467",true));
-        books.add(new Book("adam","george orwell","9780451524935",true));
-        books.add(new Book(" the great gatsby","f. scott fitzgerald","9780743273565",true));
+        initializeBooks();
         service();
     }
 
-    public void service (){
-        while(true){
+    private void initializeBooks() {
+        books = new ArrayList<>();
+        books.add(new Book("to kill a mockingbird", "harper lee", "9780060935467", true));
+        books.add(new Book("1984", "george orwell", "9780451524935", true));
+        books.add(new Book(" the great gatsby", "f. scott fitzgerald", "9780743273565", true));
+
+    }
+
+    public void service() {
+        while (true) {
             System.out.println("write 1 to Add or 2 for remove books");
             System.out.println("write 3 to barrow or 4 for return books");
             System.out.println("write 5 to list available books or q to quite");
@@ -24,19 +30,22 @@ public class Library {
 
             switch (option) {
                 case "1" -> addBook(input);
-                case "2"-> removeBook(input);
-                case "3"-> barrowBook(input);
-                case "4"-> returnBook(input);
-                case "5"->showList();
-                case "q"->{
-                    return;}
-            }}}
+                case "2" -> removeBook(input);
+                case "3" -> barrowBook(input);
+                case "4" -> returnBook(input);
+                case "5" -> showList();
+                case "q" -> {
+                    return;
+                }
+            }
+        }
+    }
 
     private void showList() {
         System.out.println("--------LIST--------");
 
-        for(Book book:books){
-            System.out.println("title : "+ book.title +" - " + "author : "+book.author+ " avalibale : " + book.isAvailable);
+        for (Book book : books) {
+            System.out.println("title : " + book.title + " - " + "author : " + book.author + " avalibale : " + book.isAvailable);
         }
         System.out.println("---------------------");
 
@@ -58,7 +67,6 @@ public class Library {
     private void barrowBook(Scanner input) {
         System.out.println("Please write name of book as its  ");
         String title = input.nextLine().toLowerCase();
-        System.out.println(title);
         boolean foundIt = false;
         for (Book book : books) {
             if ((book.title.equals(title) && book.isAvailable)) {
@@ -68,7 +76,7 @@ public class Library {
                 break;
             }
         }
-        if (!foundIt){
+        if (!foundIt) {
             System.out.println("The book is not available");
         }
     }
@@ -82,7 +90,7 @@ public class Library {
             return;
         }
         books.removeIf(book -> book.ISBN.equals(ISBN));
-        System.out.println( "the book has been removed ");
+        System.out.println("the book has been removed ");
     }
 
     private void addBook(Scanner input) {
