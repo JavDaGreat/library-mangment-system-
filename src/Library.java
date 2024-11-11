@@ -8,7 +8,7 @@ public class Library {
     public Library() {
         books = new ArrayList<>();
         books.add(new Book("to kill a mockingbird","harper lee","9780060935467",true));
-        books.add(new Book("1984","george orwell","9780451524935",true));
+        books.add(new Book("adam","george orwell","9780451524935",true));
         books.add(new Book(" the great gatsby","f. scott fitzgerald","9780743273565",true));
         service();
     }
@@ -23,80 +23,77 @@ public class Library {
             option = input.nextLine();
 
             switch (option) {
-                case "1": {
-                    System.out.println("Please write the title");
-                    String title = input.nextLine();
-                    System.out.println("Please write the author ");
-                    String author = input.nextLine();
-                    System.out.println("Please write the ISBN ");
-                    String ISBN = input.nextLine();
-                    books.add(new Book(title, author, ISBN, true));
-                    System.out.println("Book added successfully");
-                  break;
-                }
-                case "2": {
-                    System.out.println("Please write ISBN number ");
-                    String ISBN = input.nextLine();
+                case "1" -> addBook(input);
+                case "2"-> removeBook(input);
+                case "3"-> barrowBook(input);
+                case "4"-> returnBook(input);
+                case "5"->showList();
+                case "q"->{
+                    return;}
+            }}}
 
-                    if (ISBN.isEmpty()) {
-                        System.out.println("can not found it ");
-                        break;
-                    }
-                    books.removeIf(book -> book.ISBN.equals(ISBN));
-                    System.out.println( "the book has been removed ");
-                    break;
-                }
-                case "3":{
-                    System.out.println("Please write name of book as its  ");
-                    String title = input.nextLine().toLowerCase();
-                    System.out.println(title);
-                    for (Book book : books) {
-                        if ((book.title.equals(title) && book.isAvailable)) {
-                            book.isAvailable = false;
-                            System.out.println("You have borrowed the book");
-                            break;
-                        }else{
-                            System.out.println("the book is not available");
-                            break;
-                        }
-                    }
-                    break;
-                }
-                case "4":{
+    private void showList() {
+        System.out.println("--------LIST--------");
 
-                    System.out.println("Please write name of book as its1  ");
-                    String title = input.nextLine().toLowerCase();
-                    for (Book book : books) {
-                        if ((book.title.equals(title) && !book.isAvailable)) {
-                            book.isAvailable = true;
-                            System.out.println("You have returned the book");
-                            break;
-                        }
-                    }
-                    break;
+        for(Book book:books){
+            System.out.println("title : "+ book.title +" - " + "author : "+book.author+ " avalibale : " + book.isAvailable);
+        }
+        System.out.println("---------------------");
 
-                }
-                case "5":{
-                    System.out.println("--------LIST--------");
+    }
 
-                    for(Book book:books){
-                        System.out.println("title : "+ book.title +" - " + "author : "+book.author+ " avalibale : " + book.isAvailable);
-                    }
-                    System.out.println("---------------------");
-                   break;
-
-                }
-                case "q":{
-                return;}
-
-
-
-
-
-
+    private void returnBook(Scanner input) {
+        System.out.println("Please write name of book as its1  ");
+        String title = input.nextLine().toLowerCase();
+        for (Book book : books) {
+            if ((book.title.equals(title) && !book.isAvailable)) {
+                book.isAvailable = true;
+                System.out.println("You have returned the book");
+                break;
             }
         }
 
+    }
+
+    private void barrowBook(Scanner input) {
+        System.out.println("Please write name of book as its  ");
+        String title = input.nextLine().toLowerCase();
+        System.out.println(title);
+        boolean foundIt = false;
+        for (Book book : books) {
+            if ((book.title.equals(title) && book.isAvailable)) {
+                foundIt = true;
+                book.isAvailable = false;
+                System.out.println("You have borrowed the book");
+                break;
+            }
+        }
+        if (!foundIt){
+            System.out.println("The book is not available");
+        }
+    }
+
+    private void removeBook(Scanner input) {
+        System.out.println("Please write ISBN number ");
+        String ISBN = input.nextLine();
+
+        if (ISBN.isEmpty()) {
+            System.out.println("can not found it ");
+            return;
+        }
+        books.removeIf(book -> book.ISBN.equals(ISBN));
+        System.out.println( "the book has been removed ");
+    }
+
+    private void addBook(Scanner input) {
+        System.out.println("Please write the title");
+        String title = input.nextLine();
+        System.out.println("Please write the author ");
+        String author = input.nextLine();
+        System.out.println("Please write the ISBN ");
+        String ISBN = input.nextLine();
+        books.add(new Book(title, author, ISBN, true));
+        System.out.println("Book added successfully");
     }
 
 
