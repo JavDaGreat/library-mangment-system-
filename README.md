@@ -14,8 +14,7 @@ A command-line Library Management System built in Java. This system manages a co
 
 - **Java**: Core programming language.
 - **Java Collections**: `ArrayList` for storing books.
-- **Java Streams**: For filtering and displaying lists.
-
+  
 ## Project Structure
 
 - **Main Class**: Entry point to run the library system.
